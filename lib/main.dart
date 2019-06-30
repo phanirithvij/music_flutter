@@ -4,6 +4,7 @@ import 'package:music_flutter/components/appbar.dart';
 import 'package:music_flutter/components/audiodetails.dart';
 import 'package:fluttery_audio/fluttery_audio.dart';
 import 'package:music_flutter/components/audioradialseekbar.dart';
+import 'package:music_flutter/components/visualizer.dart';
 import 'package:music_flutter/models/audio.dart';
 
 void main() => runApp(MyApp());
@@ -50,6 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Container(
               width: double.infinity,
               height: 125,
+              color: Colors.transparent,
               child: Visualizer(
                 builder: (context, List<int> fft) {
                   return CustomPaint(
@@ -80,30 +82,3 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class VisualizerPainter extends CustomPainter {
-  final double height;
-  final List<int> fft;
-  final Color color;
-  final Paint visualizerPaint;
-
-  VisualizerPainter({
-    this.color,
-    this.fft,
-    this.height,
-  }) : visualizerPaint = Paint()
-          ..color = color.withOpacity(0.75)
-          ..style = PaintingStyle.fill;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    canvas.drawRect(
-      Rect.fromLTRB(0, 0, size.width, size.height),
-      visualizerPaint,
-    );
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return true;
-  }
-}
