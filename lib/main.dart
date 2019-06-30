@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:music_flutter/components/appbar.dart';
 import 'package:music_flutter/components/audiodetails.dart';
 import 'package:music_flutter/components/radialseekbar.dart';
+import 'package:fluttery_audio/fluttery_audio.dart';
+import 'package:music_flutter/models/audio.dart';
 
 void main() => runApp(MyApp());
 
@@ -24,24 +26,28 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: MyAppBar(),
-      body: Column(
-        children: <Widget>[
-          // round seek bar
-          Expanded(
-            child: RadialSeekBar(),
-          ),
+    return Audio(
+      audioUrl: demoPlaylist.songs[4].audioUrl,
+      playbackState: PlaybackState.paused,
+      child: Scaffold(
+        appBar: MyAppBar(),
+        body: Column(
+          children: <Widget>[
+            // round seek bar
+            Expanded(
+              child: RadialSeekBar(),
+            ),
 
-          // visualizer
-          Container(
-            width: double.infinity,
-            height: 125,
-          ),
+            // audio visualizer
+            Container(
+              width: double.infinity,
+              height: 125,
+            ),
 
-          // audio details and controls
-          AudioDetailsWidget(),
-        ],
+            // audio details and controls
+            AudioDetailsWidget(),
+          ],
+        ),
       ),
     );
   }
