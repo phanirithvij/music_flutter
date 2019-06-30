@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:fluttery_audio/fluttery_audio.dart';
+import 'package:music_flutter/models/audio.dart';
 import 'package:music_flutter/colors/colors.dart';
 import 'package:music_flutter/components/appbar.dart';
 import 'package:music_flutter/components/audiodetails.dart';
-import 'package:fluttery_audio/fluttery_audio.dart';
-import 'package:music_flutter/components/audioradialseekbar.dart';
 import 'package:music_flutter/components/visualizer.dart';
-import 'package:music_flutter/models/audio.dart';
+import 'package:music_flutter/components/audioradialseekbar.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Music Flutter',
+      title: 'Flutter Music',
       home: MyHomePage(),
     );
   }
@@ -81,4 +81,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-
