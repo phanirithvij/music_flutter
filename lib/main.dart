@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:music_flutter/components/appbar.dart';
 import 'package:music_flutter/components/audiodetails.dart';
-import 'package:music_flutter/components/radialseekbar.dart';
 import 'package:fluttery_audio/fluttery_audio.dart';
+import 'package:music_flutter/components/audioradialseekbar.dart';
 import 'package:music_flutter/models/audio.dart';
 
 void main() => runApp(MyApp());
@@ -26,8 +26,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Audio(
-      audioUrl: demoPlaylist.songs[4].audioUrl,
+    return AudioPlaylist(
+      playlist: demoPlaylist.songs.map((f) => f.audioUrl).toList(),
       playbackState: PlaybackState.paused,
       child: Scaffold(
         appBar: MyAppBar(),
@@ -35,7 +35,14 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             // round seek bar
             Expanded(
-              child: RadialSeekBar(),
+              child: AudioPlaylistComponent(
+                playlistBuilder: (context, playlist, child) {
+                  var audio = demoPlaylist.songs[playlist.activeIndex];
+                  return AudioRadialSeekBar(
+                    audioModel: audio,
+                  );
+                },
+              ),
             ),
 
             // audio visualizer
@@ -45,11 +52,17 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
 
             // audio details and controls
-            AudioDetailsWidget(),
+            AudioPlaylistComponent(
+              playlistBuilder: (context, playlist, child) {
+                var audio = demoPlaylist.songs[playlist.activeIndex];
+                return AudioDetailsWidget(
+                  audioModel: audio,
+                );
+              },
+            ),
           ],
         ),
       ),
     );
   }
 }
-

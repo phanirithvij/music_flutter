@@ -4,8 +4,11 @@ import 'package:music_flutter/components/controls.dart';
 import 'package:music_flutter/models/audio.dart';
 
 class AudioDetailsWidget extends StatelessWidget {
+  final AudioModel audioModel;
+
   const AudioDetailsWidget({
     Key key,
+    this.audioModel,
   }) : super(key: key);
 
   @override
@@ -20,30 +23,33 @@ class AudioDetailsWidget extends StatelessWidget {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(top: 20, bottom: 20),
-                child: RichText(
-                  text: TextSpan(
-                    text: '',
-                    children: [
-                      TextSpan(
-                        text: demoPlaylist.songs[4].songTitle + '\n',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 4,
-                          height: 1.5,
+                child: Center(
+                  child: RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                      text: '',
+                      children: [
+                        TextSpan(
+                          text: '${audioModel.songTitle}\n',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 4,
+                            height: 1.5,
+                          ),
                         ),
-                      ),
-                      TextSpan(
-                        text: demoPlaylist.songs[4].artists.join(', '),
-                        style: TextStyle(
-                          color: Colors.white.withOpacity(0.75),
-                          fontSize: 12,
-                          letterSpacing: 3,
-                          height: 1.5,
+                        TextSpan(
+                          text: audioModel.artists.join(', '),
+                          style: TextStyle(
+                            color: Colors.white.withOpacity(0.75),
+                            fontSize: 12,
+                            letterSpacing: 3,
+                            height: 1.5,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),

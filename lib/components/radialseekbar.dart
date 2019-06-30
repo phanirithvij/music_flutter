@@ -5,14 +5,19 @@ import 'package:fluttery/gestures.dart';
 import 'package:music_flutter/colors/colors.dart';
 import 'package:music_flutter/components/circleclipper.dart';
 import 'package:music_flutter/components/radialprogressbar.dart';
-import 'package:music_flutter/models/audio.dart';
 
 class RadialSeekBar extends StatefulWidget {
   final double seekPercent;
+  final double progress;
+  final Function(double) onSeekRequested;
+  final Widget child;
 
   const RadialSeekBar({
     Key key,
     this.seekPercent = 0,
+    this.progress = 0,
+    this.onSeekRequested,
+    this.child,
   }) : super(key: key);
 
   @override
@@ -20,15 +25,15 @@ class RadialSeekBar extends StatefulWidget {
 }
 
 class _RadialSeekBarState extends State<RadialSeekBar> {
-  double _seekPercent;
+  double _progress;
   PolarCoord _startDragCoord;
   double _startDragPercent;
   double _currentDragPercent;
 
   void _onDragStart(PolarCoord startCoord) {
     _startDragCoord = startCoord;
-    _startDragPercent = _seekPercent;
-    if (_seekPercent == null) {
+    _startDragPercent = _progress;
+    if (_progress == null) {
       print('seek percent is null');
     }
   }
@@ -44,31 +49,42 @@ class _RadialSeekBarState extends State<RadialSeekBar> {
   }
 
   void _onDragEnd() {
+    if (widget.onSeekRequested != null) {
+      widget.onSeekRequested(_currentDragPercent);
+    }
+
     setState(() {
       // added this ?? check as it gave me an error sometimes
-      _seekPercent = _currentDragPercent ?? _seekPercent;
+      // _progress = _currentDragPercent ?? _progress;
       _currentDragPercent = null;
       _startDragCoord = null;
       _startDragPercent = 0;
     });
-    // print('Ondragend $_seekPercent, $_currentDragPercent');
+    // print('Ondragend $_progress, $_currentDragPercent');
   }
 
   @override
   void didUpdateWidget(RadialSeekBar oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    _seekPercent = widget.seekPercent;
+    _progress = widget.progress;
   }
 
   @override
   void initState() {
     super.initState();
-    _seekPercent = widget.seekPercent;
+    _progress = widget.progress;
   }
 
   @override
   Widget build(BuildContext context) {
+    double thumbPosition = _progress;
+    if (_currentDragPercent != null) {
+      thumbPosition = _currentDragPercent;
+    } else if (widget.seekPercent != null) {
+      thumbPosition = widget.seekPercent;
+    }
+
     return RadialDragGestureDetector(
       onRadialDragEnd: _onDragEnd,
       onRadialDragStart: _onDragStart,
@@ -86,15 +102,12 @@ class _RadialSeekBarState extends State<RadialSeekBar> {
               trackColor: Color(0xFFDDDDDD),
               progressColor: accentColor,
               thumbColor: lightAccentColor,
-              progressPercent: _currentDragPercent ?? _seekPercent,
-              thumbPosition: _currentDragPercent ?? _seekPercent,
+              progressPercent: _progress,
+              thumbPosition: thumbPosition,
               innerPadding: EdgeInsets.all(2),
               child: ClipOval(
                 clipper: CircleClipper(),
-                child: Image.network(
-                  demoPlaylist.songs[4].albumArtUrl,
-                  fit: BoxFit.cover,
-                ),
+                child: widget.child,
               ),
             ),
           ),
@@ -103,4 +116,3 @@ class _RadialSeekBarState extends State<RadialSeekBar> {
     );
   }
 }
-
