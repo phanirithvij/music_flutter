@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttery/framing.dart';
 import 'package:music_flutter/colors/colors.dart';
 
 void main() => runApp(MyApp());
@@ -42,13 +43,59 @@ class _MyHomePageState extends State<MyHomePage> {
             body: Column(
                 children: <Widget>[
                     // round seek bar
-                    RandomColor
+                    RandomColorBlock(
+                        width: double.infinity,
+                        height: 100,
+                    ),
+
                     // visualizer
+                    RandomColorBlock(
+                        width: double.infinity,
+                        height: 125,
+                    ),
 
                     // audio details
+                    Container(
+                        color: accentColor,
+                        width: double.infinity,
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                                RichText(
+                                    text: TextSpan(
+                                        text: '',
+                                        children: [
+                                            TextSpan(
+                                                text: 'Song Title\n',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.bold,
+                                                    letterSpacing: 4,
+                                                    height: 1.5
+                                                ),
+                                            ),
+                                            TextSpan(
+                                                text: 'Artist name, Album name',
+                                                style: TextStyle(
+                                                    color: Colors.white.withOpacity(0.75),
+                                                    fontSize: 12,
+                                                    letterSpacing: 3,
+                                                    height: 1.5
+                                                ),
+                                            ),
+                                        ],
+                                    ),
+                                ),
+                            ],
+                        ),
+                    ),
 
                     // controls
-
+                    RandomColorBlock(
+                        width: double.infinity,
+                        height: 100,
+                    ),
                 ],
             ),
         );
