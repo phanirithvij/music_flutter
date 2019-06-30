@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:music_flutter/colors/colors.dart';
 import 'package:music_flutter/components/controls.dart';
+import 'package:music_flutter/models/audio.dart';
 
 class AudioDetailsWidget extends StatelessWidget {
   const AudioDetailsWidget({
@@ -24,7 +25,7 @@ class AudioDetailsWidget extends StatelessWidget {
                     text: '',
                     children: [
                       TextSpan(
-                        text: 'Song Title\n',
+                        text: demoPlaylist.songs[4].songTitle + '\n',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 14,
@@ -34,7 +35,7 @@ class AudioDetailsWidget extends StatelessWidget {
                         ),
                       ),
                       TextSpan(
-                        text: 'Artist name, Album name',
+                        text: demoPlaylist.songs[4].artists.join(', '),
                         style: TextStyle(
                           color: Colors.white.withOpacity(0.75),
                           fontSize: 12,
