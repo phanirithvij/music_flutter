@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttery_audio/fluttery_audio.dart';
 import 'package:music_flutter/colors/colors.dart';
+import 'package:music_flutter/models/audio.dart';
 
 class PlayPauseButton extends StatelessWidget {
   const PlayPauseButton({
@@ -85,16 +86,30 @@ class NextButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return AudioPlaylistComponent(
       playlistBuilder: (context, playlist, child) {
-        // var last = playlist.son
+        var currPlaying = playlist.activeIndex;
+        var lastSong = demoPlaylist.songs.length - 1;
+
+        var lastNow = (currPlaying == lastSong);
+
+        var icon = Icons.skip_next;
+        Function onPressed = playlist.next;
+
+        if (lastNow) {
+          icon = Icons.add;
+          onPressed = (){
+            print('add new song at the end');
+          };
+        }
+
         return IconButton(
           splashColor: lightAccentColor,
           highlightColor: Colors.transparent,
           color: Colors.white,
           icon: Icon(
-            Icons.skip_next,
+            icon,
             size: 35,
           ),
-          onPressed: playlist.next,
+          onPressed: onPressed,
         );
       },
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:fluttery_audio/fluttery_audio.dart';
 import 'package:music_flutter/models/audio.dart';
 import 'package:music_flutter/colors/colors.dart';
@@ -51,17 +52,45 @@ class _MyHomePageState extends State<MyHomePage> {
             Container(
               width: double.infinity,
               height: 125,
-              color: Colors.transparent,
-              child: Visualizer(
-                builder: (context, List<int> fft) {
-                  return CustomPaint(
-                    painter: VisualizerPainter(
-                      fft: fft,
-                      height: 125,
-                      color: accentColor,
-                    ),
-                    child: Container(),
+              // color: Colors.transparent,
+              child: AudioComponent(
+                updateMe: [WatchableAudioProperties.audioPlayerState],
+                playerBuilder: (context, player, child) {
+                  var playing = player.state == AudioPlayerState.playing;
+                  print('Playing $playing');
+                  print('State ${player.state}');
+                  // var paused =
+                  //     playlist.audioPlayer.state == AudioPlayerState.paused;
+                  if (playing) {
+                    return (Theme.of(context).platform ==
+                            TargetPlatform.android)
+                        ? Visualizer(
+                            builder: (context, List<int> fft) {
+                              return CustomPaint(
+                                painter: VisualizerPainter(
+                                  fft: fft,
+                                  height: 125,
+                                  color: accentColor,
+                                ),
+                                child: Container(),
+                              );
+                            },
+                          )
+                        : Container();
+                  } /*  else if (paused){ */
+                  return AudioPlaylistComponent(
+                    playlistBuilder: (context, playlist, child) {
+                      return ColorsWidget(
+                        activeIndex: playlist.activeIndex,
+                        image: NetworkImage(
+                          demoPlaylist.songs[playlist.activeIndex].albumArtUrl,
+                        ),
+                      );
+                    },
+                    // child:
                   );
+                  // }
+                  // return Container();
                 },
               ),
             ),
