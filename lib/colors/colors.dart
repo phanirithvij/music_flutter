@@ -87,14 +87,15 @@ class _ColorsWidgetState extends State<ColorsWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.all(0),
       child: _colors.length != 0
           ? Row(
               children: _colors.map((f) {
-                return Container(
-                  color: f,
-                  width: MediaQuery.of(context).size.width /
-                      (_colors.length),
-                  height: 100,
+                return Expanded(
+                  child: Container(
+                    color: f,
+                    width: MediaQuery.of(context).size.width / (_colors.length),
+                  ),
                 );
               }).toList(),
             )

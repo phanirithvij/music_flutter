@@ -24,22 +24,29 @@ class AudioDetailsWidget extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 20, bottom: 20),
                 child: Center(
-                  child: RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                      text: '',
-                      children: [
-                        TextSpan(
-                          text: '${audioModel.songTitle}\n',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 4,
-                            height: 1.5,
-                          ),
+                  child: Column(
+                    children: <Widget>[
+                      RichText(
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
+                        text: TextSpan(
+                          text: '',
+                          children: [
+                            TextSpan(
+                              text: '${audioModel.songTitle}',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 4,
+                                height: 1.5,
+                              ),
+                            ),
+                          ],
                         ),
-                        TextSpan(
+                      ),
+                      RichText(
+                        text: TextSpan(
                           text: audioModel.artists.join(', '),
                           style: TextStyle(
                             color: Colors.white.withOpacity(0.75),
@@ -48,8 +55,8 @@ class AudioDetailsWidget extends StatelessWidget {
                             height: 1.5,
                           ),
                         ),
-                      ],
-                    ),
+                      )
+                    ],
                   ),
                 ),
               ),
